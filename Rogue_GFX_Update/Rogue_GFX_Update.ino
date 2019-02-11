@@ -148,7 +148,7 @@ const char mes[23][10] PROGMEM = {
   "no space",         //2
   "object here",         //3
   "no slot",          //4
-  "dir?",             //5
+  "dir}",             //5
   "level up",         //6
   "oops...",          //7
   "yummy",            //8

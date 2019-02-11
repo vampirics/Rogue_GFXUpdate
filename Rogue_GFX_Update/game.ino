@@ -64,21 +64,15 @@ void gameover() {
 
 
   locate(6, 0);
-  font5x7.print(F("ooooooooo"));
+  font5x7.print(F("         "));
   locate(5, 1);
-  font5x7.print(F("o  R I P  o"));
+  font5x7.print(F("(  R I P  ("));
   locate(4, 2);
-  font5x7.print(F("o           o"));
+  font5x7.print(F("             "));
   locate(4, 3);
-  font5x7.print(F("o   Hero    o"));
-  locate(4, 4);
-  font5x7.print(F("o           o"));
-  locate(4, 5);
-  font5x7.print(F("o           o"));
-  locate(3, 6);
-  font5x7.print(F("*o           o*"));
+  font5x7.print(F("*   Hero    *"));
   locate(0, 7);
-  font5x7.print(F("___)\\\\//))(//\\(/((___"));
+  font5x7.print(F("(___(__________(____(___"));
 
   if (death == 0) {
     locate(7, 5);
@@ -175,7 +169,7 @@ void score() {
     font5x7.print(glory[4 - i].gold);
     locate(14, 2 + i);
     if (glory[4 - i].depth == 255) {
-      font5x7.print(F("Win"));
+      font5x7.print(F("Win ,"));
     } else {
       font5x7.print(glory[4 - i].depth);
     }

@@ -25,7 +25,7 @@ void drawInventry(byte st, byte mode) {
     font5x7.print( hh );
     font5x7.print(F("  "));
   } else {
-    font5x7.print(F(" which?"));
+    font5x7.print(F(" which}"));
   }
   locate(0, 1);
 //  arduboy.setTextBackground(BLACK);
@@ -62,7 +62,7 @@ void drawInventry(byte st, byte mode) {
       if(ii[i]/16 == 3){           //weapon
         font5x7.print('^');
         font5x7.print((int)i2[i]);
-        font5x7.print(',');
+        font5x7.print('<'); //replacement for ','
         font5x7.print((int)i3[i]);
         font5x7.print(']');      
       } else if(ii[i]/16 == 4 || ii[i]/16 == 8){      //armor or ring

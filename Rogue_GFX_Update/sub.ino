@@ -107,11 +107,11 @@ void drawMap() {    //@Pharap's sharp eye
         } else if (dungeon[i][j] >= 31 && dungeon[i][j] <= 38) {
           c = '?'; //arduboy.print(F("?"));
         } else if (dungeon[i][j] >= 41 && dungeon[i][j] <= 46) {
-          c = '-'; //arduboy.print(F("-"));
+          c = '&'; //arduboy.print(F("-"));
         } else if (dungeon[i][j] >= 51 && dungeon[i][j] <= 56) {
           c = '|'; //arduboy.print(F("|"));
         } else if (dungeon[i][j] >= 61 && dungeon[i][j] <= 66) {
-          c = '-'; //arduboy.print(F("-"));
+          c = '&'; //arduboy.print(F("-"));
         } else if (dungeon[i][j] == 68) {
           c = ' '; //arduboy.print(F(" "));
         } else if (dungeon[i][j] >= 71 && dungeon[i][j] <= 76) {
