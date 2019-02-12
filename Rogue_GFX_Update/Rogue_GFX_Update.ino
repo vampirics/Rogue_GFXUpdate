@@ -38,7 +38,7 @@ const char nItem[113][8] PROGMEM = {
   "tin",      "zinc",
   "Yendor",
   "power",    "restore",  "heal",     "e.heal",   "poison",   "level",    "blind",    "hallu",
-  "m.dtect",  "i.dtect",  "confuse",  "levtate",  "speed",    "look",
+  "m'dtect",  "i'dtect",  "confuse",  "levtate",  "speed",    "look",
   "protect",  "hold",     "weapon",   "armor",    "idntify",  "telport",  "sleep",    "scare",
   "bless",    "create",   "anger",    "map",
   "stealth",  "teleport",  "life",     "food",     "damage",   "strong",   "dex",
@@ -150,7 +150,7 @@ const char mes[23][10] PROGMEM = {
   "no slot",          //4
   "dir}",             //5
   "level up",         //6
-  "oops...",          //7
+  "oops'''",          //7
   "yummy",            //8
   "it is cursed",        //9
   "removed",          //10
@@ -165,7 +165,7 @@ const char mes[23][10] PROGMEM = {
   "burned",           //19
   "level down",         //20
   "drained",          //21
-  "ZZZ..."            //22
+  "ZZZ'''"            //22
 };
 
 byte gstate = 0;
