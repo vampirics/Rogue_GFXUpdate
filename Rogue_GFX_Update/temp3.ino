@@ -9,26 +9,26 @@ void box(byte x1, byte y1, byte x2, byte y2, byte kind) {
 void makeRoom(byte i) {
   for (int x = roomSX[i] - 1; x <= roomEX[i] + 1; x++) {
     if (dungeon[x][roomSY[i] - 1] == 8) {
-      dungeon[x][roomSY[i] - 1] = 21 + i + random(2) * 40; //'+'
+      dungeon[x][roomSY[i] - 1] = 21 + i + random(2) * 200; //'+'
     } else {
-      dungeon[x][roomSY[i] - 1] = 41 + i; //'-'
+      dungeon[x][roomSY[i] - 1] = 201 + i; //'-'
     }
     if (dungeon[x][roomEY[i] + 1] == 8) {
-      dungeon[x][roomEY[i] + 1] = 21 + i + random(2) * 40; //'+'
+      dungeon[x][roomEY[i] + 1] = 21 + i + random(2) * 200; //'+'
     } else {
-      dungeon[x][roomEY[i] + 1] = 41 + i; //'-'
+      dungeon[x][roomEY[i] + 1] = 201 + i; //'-'
     }
   }
   for (int y = roomSY[i]; y <= roomEY[i]; y++) {
     if (dungeon[roomSX[i] - 1][y] == 8) {
-      dungeon[roomSX[i] - 1][y] = 21 + i + random(2) * 50;
+      dungeon[roomSX[i] - 1][y] = 21 + i + random(2) * 210;
     } else {
-      dungeon[roomSX[i] - 1][y] = 51 + i;
+      dungeon[roomSX[i] - 1][y] = 211 + i;
     }
     if (dungeon[roomEX[i] + 1][y] == 8) {
-      dungeon[roomEX[i] + 1][y] = 21 + i + random(2) * 50;
+      dungeon[roomEX[i] + 1][y] = 21 + i + random(2) * 210;
     } else {
-      dungeon[roomEX[i] + 1][y] = 51 + i;
+      dungeon[roomEX[i] + 1][y] = 211 + i;
     }
   }
   box(roomSX[i], roomSY[i], roomEX[i], roomEY[i], i + 1);
@@ -110,7 +110,7 @@ void makeDungeon4() {
     for (int i = 0; i < 21; i++) {
       for (int j = 0; j < 8; j++) {
         if (dungeon[i][j] == 8 && random(5) == 0) {
-          dungeon[i][j] = 68;
+          dungeon[i][j] = 228;
         }
       }
     }
@@ -125,11 +125,28 @@ void makeDungeon4() {
     }
   }
 
+  //罠の設置
+  if( isBigRoom == 0 ){
+    for(int i=0; i<RMAX*2; i++){
+      if(hasRoom[i] ==1 && random(3)==0 ){
+//        dungeon[roomSX[i] + random(roomEX[i] - roomSX[i] + 1)][roomSY[i] + random(roomEY[i] - roomSY[i] + 1)] = (random(7)+1)*10 + 1 + i;
+        buildStructure( i, random(6)*10 + 31 + i );
+      }
+    }
+  } else {
+    for(int i=0; i<5; i++){
+  //    dungeon[roomSX[i] + random(roomEX[i] - roomSX[i] + 1)][roomSY[i] + random(roomEY[i] - roomSY[i] + 1)] = (random(7)+1)*10 + 1 + i;
+      buildStructure( i, random(6)*10 + 31 + i );
+    }
+  }
+
+  
   //階段をつくる
   int s = 0;
   if( isBigRoom==0 ) s = random(RMAX) * 2;
   if (hasRoom[s] == 0) s++;
-  dungeon[roomSX[s] + random(roomEX[s] - roomSX[s] + 1)][roomSY[s] + random(roomEY[s] - roomSY[s] + 1)] = 11 + s;
+//  dungeon[roomSX[s] + random(roomEX[s] - roomSX[s] + 1)][roomSY[s] + random(roomEY[s] - roomSY[s] + 1)] = 11 + s;
+  buildStructure( s, 11+s );
   clearKnown();
 
   //ヒーローを置く
@@ -150,3 +167,9 @@ void makeDungeon4() {
   hy=roomSY[h]+random(roomEY[h]-roomSY[h]+1);
   }
 */
+
+void buildStructure( byte room, byte structure){
+  dungeon[roomSX[room] + random(roomEX[room] - roomSX[room] + 1)][roomSY[room] + random(roomEY[room] - roomSY[room] + 1)] = structure;
+
+}
+

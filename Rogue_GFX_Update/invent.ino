@@ -237,12 +237,12 @@ void showStatus() {
   locate(h, 3);
   font5x7.print(F("Hp;"));
   font5x7.print(hp);
-  font5x7.print('~');
+  font5x7.print('~'); //replacement for slash
   font5x7.print(hpm);
   locate(h, 4);
   font5x7.print(F("St;"));
   font5x7.print(st);
-  font5x7.print('~');
+  font5x7.print('~'); //replacement for slash
   font5x7.print(stm);
   locate(h, 5);
   font5x7.print(F("AC;"));
@@ -257,7 +257,7 @@ void showStatus() {
   locate(h, 6);
   font5x7.print(F("Ex;"));
   font5x7.print(lv);
-  font5x7.print('~');
+  font5x7.print('~'); //replacement for slash
   locate(h + 3, 7);
   font5x7.print(ex);
 }
@@ -265,12 +265,14 @@ void showStatus() {
 void search() {
   for (int i = hx - 1; i <= hx + 1; i++) {
     for (int j = hy - 1; j <= hy + 1; j++) {
-      if (dungeon[i][j] >= 61 && dungeon[i][j] <= 66) {
-        dungeon[i][j] = dungeon[i][j] - 40;
-      } else if (dungeon[i][j] == 68) {
-        dungeon[i][j] = dungeon[i][j] - 60;
-      } else if (dungeon[i][j] >= 71 && dungeon[i][j] <= 76) {
-        dungeon[i][j] = dungeon[i][j] - 50;
+      if (dungeon[i][j] >= 31 && dungeon[i][j] <= 106) {
+        dungeon[i][j] = dungeon[i][j] + 80;
+      } else if (dungeon[i][j] >= 221 && dungeon[i][j] <= 226) {
+        dungeon[i][j] = dungeon[i][j] - 200;
+      } else if (dungeon[i][j] == 228) {
+        dungeon[i][j] = dungeon[i][j] - 220;
+      } else if (dungeon[i][j] >= 231 && dungeon[i][j] <= 236) {
+        dungeon[i][j] = dungeon[i][j] - 210;
       }
     }
   }

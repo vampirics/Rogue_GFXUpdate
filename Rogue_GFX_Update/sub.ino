@@ -90,10 +90,11 @@ void drawMap() {    //@Pharap's sharp eye
       if (getKnown(i, j) == 1) {
         if (dungeon[i][j] == 0) {
           c = ' '; //arduboy.print(F(" "));
-        } else if (dungeon[i][j] >= 1 && dungeon[i][j] <= 6 && isDark[dungeon[hx][hy] % 10 - 1] == 0) {
-          //        } else if (dungeon[i][j] >= 1 && dungeon[i][j] <= 6 ) {
-          //          if ((dungeon[i][j] == dungeon[hx][hy]) || (dungeon[i][j] == dungeon[hx][hy] - 10)) {
-          if ( dungeon[i][j] < 40 && dungeon[i][j] % 10 == dungeon[hx][hy] % 10 ) {
+//        } else if (dungeon[i][j] >= 1 && dungeon[i][j] <= 6 && isDark[dungeon[hx][hy] % 10 - 1] == 0) {
+//          if ( dungeon[i][j] < 40 && dungeon[i][j] % 10 == dungeon[hx][hy] % 10 ) {
+        } else if (((dungeon[i][j] >= 1 && dungeon[i][j] <= 6) || (dungeon[i][j] >= 31 && dungeon[i][j] <= 106)) 
+          && isDark[dungeon[hx][hy] % 10 - 1] == 0) {
+          if ( dungeon[i][j] % 10 == dungeon[hx][hy] % 10 ) {
             c = '.'; //arduboy.print(F("."));
           } else {
             c = ' '; //arduboy.print(F(" "));
@@ -104,17 +105,19 @@ void drawMap() {    //@Pharap's sharp eye
           c = '%'; //arduboy.print(F("%"));
         } else if (dungeon[i][j] >= 21 && dungeon[i][j] <= 26) {
           c = '+'; //arduboy.print(F("+"));
-        } else if (dungeon[i][j] >= 31 && dungeon[i][j] <= 38) {
+        } else if (dungeon[i][j] >= 111 && dungeon[i][j] <= 186) {
+          c = '_'; //arduboy.print(F("^"));
+        } else if (dungeon[i][j] >= 191 && dungeon[i][j] <= 198) {
           c = '?'; //arduboy.print(F("?"));
-        } else if (dungeon[i][j] >= 41 && dungeon[i][j] <= 46) {
+        } else if (dungeon[i][j] >= 201 && dungeon[i][j] <= 206) {
           c = '&'; //arduboy.print(F("-"));
-        } else if (dungeon[i][j] >= 51 && dungeon[i][j] <= 56) {
+        } else if (dungeon[i][j] >= 211 && dungeon[i][j] <= 216) {
           c = '|'; //arduboy.print(F("|"));
-        } else if (dungeon[i][j] >= 61 && dungeon[i][j] <= 66) {
+        } else if (dungeon[i][j] >= 221 && dungeon[i][j] <= 226) {
           c = '&'; //arduboy.print(F("-"));
-        } else if (dungeon[i][j] == 68) {
+        } else if (dungeon[i][j] == 228) {
           c = ' '; //arduboy.print(F(" "));
-        } else if (dungeon[i][j] >= 71 && dungeon[i][j] <= 76) {
+        } else if (dungeon[i][j] >= 231 && dungeon[i][j] <= 236) {
           c = '|'; //arduboy.print(F("|"));
         }
       } else {
@@ -215,34 +218,35 @@ void moveMonst() {
             hconf = 10;
             bitWrite(m1[i], 3, 0);
           } else if (ms[i] % 32 == 25 && canBless() > 0 && random(2) == 0) {
+            flashHero();
+            mess(19);
             byte dmg = random(10)+10;
-            if( hp > dmg ){
-              flashHero();
-              mess(19);
-              hp = hp - dmg; 
-            }
+            charon(dmg,3);
+//            if( hp > dmg ){
+//              hp = hp - dmg; 
+//            }
           } else {
             
             char d=1;
             if(ms[i]/32 == 7) d=-1;
             
             if ( mx[i] > hx && monst[mx[i] - d][my[i]] == 0
-                && dungeon[mx[i] - d][my[i]] >= 1 && dungeon[mx[i] - d][my[i]] <= 26) {
+                && dungeon[mx[i] - d][my[i]] >= 1 && dungeon[mx[i] - d][my[i]] <= 190) {
               r=2-d;
 //              r = 1;
 //              if(ms[i]/32 ==7) r=3;
             } else if ( my[i] > hy && monst[mx[i]][my[i] - d] == 0
-                       && dungeon[mx[i]][my[i] - d] >= 1 && dungeon[mx[i]][my[i] - d] <= 26) {
+                       && dungeon[mx[i]][my[i] - d] >= 1 && dungeon[mx[i]][my[i] - d] <= 190) {
               r=3-d;
 //              r = 2;
 //              if(ms[i]/32 ==7) r=4;
             } else if ( mx[i] < hx && monst[mx[i] + d][my[i]] == 0
-                       && dungeon[mx[i] + d][my[i]] >= 1 && dungeon[mx[i] + d][my[i]] <= 26) {
+                       && dungeon[mx[i] + d][my[i]] >= 1 && dungeon[mx[i] + d][my[i]] <= 190) {
               r=2+d;
 //              r = 3;
 //              if(ms[i]/32 ==7) r=1;
             } else if ( my[i] < hy && monst[mx[i]][my[i] + d] == 0
-                       && dungeon[mx[i]][my[i] + d] >= 1 && dungeon[mx[i]][my[i] + d] <= 26) {
+                       && dungeon[mx[i]][my[i] + d] >= 1 && dungeon[mx[i]][my[i] + d] <= 190) {
               r=3+d;
 //              r = 4;
 //              if(ms[i]/32 ==7) r=2;
@@ -267,7 +271,7 @@ void moveMonst() {
                          mx[i] + dx >= 0 && mx[i] + dx <= 20 &&
                          my[i] + dy >= 0 && my[i] + dy <= 7 &&
                          monst[mx[i] + dx][my[i] + dy] == 0 &&
-                         dungeon[mx[i] + dx][my[i] + dy] >= 1 && dungeon[mx[i] + dx][my[i] + dy ] <= 26) {
+                         dungeon[mx[i] + dx][my[i] + dy] >= 1 && dungeon[mx[i] + dx][my[i] + dy ] <= 190) {
                 monst[mx[i]][my[i]] = 0;
                 mx[i] = mx[i] + dx;
                 my[i] = my[i] + dy;

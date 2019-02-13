@@ -271,7 +271,7 @@ void makeDungeon2() {
 
 void teleportHero(){
   int h=0;
-  if(isBigRoom==0) random(RMAX)*2;
+  if(isBigRoom==0) h=random(RMAX)*2;
   if(hasRoom[h]==0) h++;
   hx=roomSX[h]+random(roomEX[h]-roomSX[h]+1);
   hy=roomSY[h]+random(roomEY[h]-roomSY[h]+1);

@@ -20,7 +20,11 @@ void checkMonst(byte m, byte r, byte dmg, byte x, byte y) { //m=id(0...15), r=va
   if (mh[m] <= dmg) {
     monst[x][y] = 0;
     ms[m] = 0;
-    ex = ex + pgm_read_byte(mstat[r] + 4);
+    if(r>=22){
+      ex = ex + pgm_read_byte(mstat[r] + 4)*100;
+    } else {
+      ex = ex + pgm_read_byte(mstat[r] + 4);
+    }
     if (r == 15) {
       hheld = 0;
     }
@@ -53,15 +57,17 @@ void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
 
   if (rr < prob) {
     dmg = (random(pgm_read_byte(mstat[i] + 1), pgm_read_byte(mstat[i] + 2)) * (100 - ac * 3)) / 100;
-    if (hp <= dmg) {
-      death=i+2;
-      gstate = 2;
-    } else {
-      flashHero();
-      hp = hp - dmg;
+//    if (hp <= dmg) {
+//      death=i+2;
+//      gstate = 2;
+//    } else {
+//      flashHero();
+//      hp = hp - dmg;
+    flashHero();
+    charon(dmg, i+4); 
       if (bitRead(m1[r], 3) == 1) {
         specialAttack( i ,r );
-      }
+//      }
     }
   } 
 }
@@ -77,8 +83,10 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
         mess(13);
         hslep = random(5) + 4;
         if (random(20) == 0) {
-          hp = 0;
-          death=1;
+//          hp = 0;
+//          death=1;
+          byte dmg=hp;
+          charon(dmg,1);
         }
       }
       break;

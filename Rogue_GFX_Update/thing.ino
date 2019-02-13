@@ -90,7 +90,7 @@ void dropItem(byte x, byte y, byte st) {
     if (ii[st] == 16 * 6 + findScroll(7) ) { //&& bitRead(sknow,7)==1){
       i1[st]--;
       if (i1[st] == 0) deleteItem(st);
-      dungeon[x][y] = dungeon[x][y] % 10 + 30;
+      dungeon[x][y] = dungeon[x][y] % 10 + 190;
     } else if (thing[x][y] != 0) {
       mess(3);
     } else {
@@ -276,7 +276,7 @@ void throwItem(byte i) {    //i=pack num 0 to 19
           if (fi / 16 == 5) {
             hitPotion(fi % 16, mon);
           } else if (fi / 16 == 8 && random(4) != 0 ) {
-            hitWand(fi % 16, mon);
+            hitWand(fi % 16, mon, destx, desty);
           } else {
             if ( fi / 16 == 3) {
               dmg = (random(hdex, hdex * hdmg) * 2 + strToDmg(st + rstr) * 2 + rdex + lv + 1) / 2;
@@ -354,7 +354,8 @@ void hitPotion(byte vari, byte mon) { //mon=1 to 26 ID
   }
 }
 
-void hitWand(byte vari, byte mon) {
+void hitWand(byte vari, byte mon, byte x, byte y) {
+  byte dmg=0;
   flashMonst(mon - 1);
   switch (ttab[3][vari]) {
     case 0:
@@ -388,7 +389,9 @@ void hitWand(byte vari, byte mon) {
       ms[mon - 1] = 32 * 4 + ms[mon - 1] % 32;
       break;
     case 7:     // missile
-      mh[mon - 1] = mh[mon - 1] / 2;
+//      mh[mon - 1] = mh[mon - 1] / 2;
+      dmg=lv*5;
+      checkMonst( mon-1, ms[mon-1]%32, dmg, x, y);
       break;
     case 8:
       bitWrite(m1[mon - 1], 3, 0);

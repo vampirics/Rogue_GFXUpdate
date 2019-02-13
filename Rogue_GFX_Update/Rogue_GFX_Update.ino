@@ -37,7 +37,7 @@ const char nItem[113][8] PROGMEM = {
   "brass",    "bronze",   "copper",   "iron",     "lead",     "nickel",   "steel",    "silver",
   "tin",      "zinc",
   "Yendor",
-  "power",    "restore",  "heal",     "e.heal",   "poison",   "level",    "blind",    "hallu",
+  "power",    "restore",  "heal",     "e'heal",   "poison",   "level",    "blind",    "hallu",
   "m'dtect",  "i'dtect",  "confuse",  "levtate",  "speed",    "look",
   "protect",  "hold",     "weapon",   "armor",    "idntify",  "telport",  "sleep",    "scare",
   "bless",    "create",   "anger",    "map",
@@ -87,10 +87,10 @@ const char mstat[26][7] PROGMEM = {
   { 42,  4, 24,  75, 110,   0, 0b00000110},  //19 X
   { 90,  4, 40,  85, 200,  33, 0b00000011},  //20 U
   { 97,  7, 37,  85, 250,  25, 0b00000011},  //21 M
-  { 55,  2, 18,  85, 255,  18, 0b00000011},  //22 V
-  {115, 10, 50,  85, 255,  10, 0b10000011},  //23 G
-  {132,  7, 50, 100, 255,   0, 0b00000101},  //24 J
-  {145,  8, 60, 100, 255,  90, 0b00000010}   //25 D
+  { 55,  2, 18,  85,   4,  18, 0b00000011},  //22 V 350
+  {115, 10, 50,  85,  20,  10, 0b10000011},  //23 G 2000
+  {132,  7, 50, 100,  30,   0, 0b00000101},  //24 J 3000
+  {145,  8, 60, 100,  50,  90, 0b00000010}   //25 D 5000
 };
 const char wstat[WEMAX][2] PROGMEM = {
   { 2, 3 }, { 3, 4 }, { 4, 5 }, { 1, 1 }, { 1, 1 }, { 1, 2 }, { 1, 3 }, { 1, 4 }
@@ -141,18 +141,27 @@ char gmon[10];
 char gitm[8];
 char gmes[15];
 
+const char trap[6][8] PROGMEM = {
+  "door",
+  "arrow",
+  "sleep",
+  "telport",
+  "poison",
+  "rust"
+};
+
 const char mes[23][10] PROGMEM = {
 // 0123456789012345
   "welcome`",         //0
   "I cannot",         //1
   "no space",         //2
-  "object here",         //3
+  "object here",      //3
   "no slot",          //4
   "dir}",             //5
   "level up",         //6
   "oops'''",          //7
   "yummy",            //8
-  "it is cursed",        //9
+  "it is cursed",     //9
   "removed",          //10
   "equipped",         //11
   "wielded",          //12
@@ -163,7 +172,7 @@ const char mes[23][10] PROGMEM = {
   "held",             //17
   "graced",           //18
   "burned",           //19
-  "level down",         //20
+  "level down",       //20
   "drained",          //21
   "ZZZ'''"            //22
 };

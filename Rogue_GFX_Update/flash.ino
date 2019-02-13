@@ -5,7 +5,7 @@ void flashHero(){
     drawMonst();
   }
 //  arduboy.setTextBackground(WHITE);
-  arduboy.fillRect(hx*6, hy*8, 6,8,WHITE);
+  arduboy.fillRect(hx*6+1, hy*8, 6,8,WHITE);
   font5x7.setTextColor(BLACK);
   locate(hx, hy);
   font5x7.print('@');
@@ -22,7 +22,7 @@ void flashMonst(byte num){
     drawMonst();
   }
 //  arduboy.setTextBackground(WHITE);
-  arduboy.fillRect(mx[num]*6, my[num]*8, 6,8,WHITE);
+  arduboy.fillRect(mx[num]*6+1, my[num]*8, 6,8,WHITE);
   font5x7.setTextColor(BLACK);
   locate(mx[num], my[num]);
   if(hblnd == 0 && bitRead(m1[num],6)==0){
@@ -62,6 +62,7 @@ void initHero(){
   ii[2] = 3 * 16 + 3; i1[2] =  1; i2[2] = 1; i3[2] = 0; i4[2] = 0b00100000;
   ii[3] = 3 * 16 + 5; i1[3] = 30; i2[3] = 0; i3[3] = 0; i4[3] = 0b10100000;
   ii[4] = 4 * 16 + 1; i1[4] =  1; i2[4] = 1; i3[4] = 0; i4[4] = 0b00110000;
+//  ii[5] = 6 * 16 + findScroll(11); i1[5] = 5; i2[5] = 0; i3[5] = 0; i4[5] = 0b10000000;
 
 }
 

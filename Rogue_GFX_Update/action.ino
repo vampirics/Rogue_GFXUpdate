@@ -220,6 +220,7 @@ void readScroll(byte r) {
     case 11:      //map
       for (int x = 0; x < 21; x++) {
         for (int y = 0; y < 8; y++) {
+          if (dungeon[x][y] >=31 && dungeon[x][y] <= 106) dungeon[x][y] += 80;
           if (dungeon[x][y] != 0) {
             setKnown(x, y);
           }
@@ -233,9 +234,9 @@ void zap(byte vari) {
   byte dir = askDir();
   int dest = checkHit(dir, 20);
   byte mon = dest / 256;
-  //  char destx = (dest % 256) % 21;
-  //  char desty = (dest % 256) / 21;
-  if (mon != 0) hitWand( vari, mon);
+  char destx = (dest % 256) % 21;
+  char desty = (dest % 256) / 21;
+  if (mon != 0) hitWand( vari, mon, destx, desty);
 }
 
 byte equip(byte type, byte n) {     //type=3(weapon),4(armor),7(ring), n=1 or 2(for ring)...rtab[equip(7,2)]
@@ -277,7 +278,7 @@ int checkHit(byte dir, byte str) {
       x = x + dx;
       y = y + dy;
       ex = 1;
-    } else if (dungeon[x + dx][y + dy] == 0 || dungeon[x + dx][y + dy] >= 41) {
+    } else if (dungeon[x + dx][y + dy] == 0 || dungeon[x + dx][y + dy] >= 200) {
       ex = 1;
     } else {
       x = x + dx;
@@ -297,7 +298,7 @@ byte findPlace(byte x, byte y, byte tm) {   //tm=0:thing, 1:monst
     char st = (i + r) % 9;
     char dx = st % 3 - 1;
     char dy = st / 3 - 1;
-    if (dungeon[x + dx][y + dy] >= 1 && dungeon[x + dx][y + dy] <= 36
+    if (dungeon[x + dx][y + dy] >= 1 && dungeon[x + dx][y + dy] <= 200
         && thing[x + dx][y + dy] * !tm == 0 && monst[x + dx][y + dy]*tm == 0) {
       result = st + 1;
       ex = 1;
