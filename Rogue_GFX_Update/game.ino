@@ -41,10 +41,10 @@ void gameover() {
   hh = 400;
 
 
-  locate(5, 1);
-  font5x7.print(F("(  R I P  ("));
-  locate(4, 3);
-  font5x7.print(F("_   Hero    _"));
+  locate(2, 1);
+  font5x7.print(F("( REST IN PEACE ("));
+  locate(5, 3);
+  font5x7.print(F("_  Hero  _"));
 
 
   if (death == 0) {
@@ -56,7 +56,7 @@ void gameover() {
   } else if(death==2){
     locate(7, 4);
     font5x7.print(F("lack of"));
-    locate(8, 5);
+    locate(10, 5);
     font5x7.print(F("luck"));
   } else if(death==3){
     locate(7, 4);    
@@ -94,11 +94,11 @@ void winner() {
 
 
   locate(0, 1);
-  font5x7.print(F("   , CONGRATULATION ,   "));
+  font5x7.print(F(" , CONGRATULATION ,  "));
   locate(0, 2);
-  font5x7.print(F("YOU MADE IT OUT WITH THE"));
+  font5x7.print(F("YOU MADE IT OUT WITH "));
   locate(0, 3);
-  font5x7.print(F("    AMULET OF YENDOR    "));
+  font5x7.print(F("THE AMULET OF YENDOR "));
 
 
 
@@ -111,11 +111,10 @@ void winner() {
 void score() {
   //  byte rank = checkHiScore();
 
-  locate(4, 0);
-  font5x7.print(F("Hall Of Fame"));
-;
-  //locate(12, 7);
-  //font5x7.print(F("B]Clear"));
+  locate(0, 0);
+  font5x7.print(F("- ) Hall Of Fame )  -"));
+  locate(2, 7);
+  //font5x7.print(F("..................."));
 
   for (int i = 0; i < 5; i++) {
     if (rank == i + 1) {
