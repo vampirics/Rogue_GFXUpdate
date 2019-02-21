@@ -273,11 +273,11 @@ void teleportHero(){
   int h=0;
   if(isBigRoom==0) h=random(RMAX)*2;
   if(hasRoom[h]==0) h++;
-  hx=roomSX[h]+random(roomEX[h]-roomSX[h]+1);
-  hy=roomSY[h]+random(roomEY[h]-roomSY[h]+1);
-  if(monst[hx][hy] != 0){
-    ms[monst[hx][hy]-1]=0;
-    monst[hx][hy]=0;
+  hero.hx=roomSX[h]+random(roomEX[h]-roomSX[h]+1);
+  hero.hy=roomSY[h]+random(roomEY[h]-roomSY[h]+1);
+  if(monst[hero.hx][hero.hy] != 0){
+    ms[monst[hero.hx][hero.hy]-1]=0;
+    monst[hero.hx][hero.hy]=0;
   }
 }
 

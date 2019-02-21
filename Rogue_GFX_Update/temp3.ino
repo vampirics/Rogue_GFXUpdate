@@ -45,7 +45,7 @@ void makeDungeon4() {
     hasRoom[i] = 0;
   }
 
-  if ( dlv >=5 && random(20) == 0) {      //Big Room
+  if ( hero.dlv >=5 && random(20) == 0) {      //Big Room
     isBigRoom = 1;
     hasRoom[0]=1;
     roomSX[0]=1;
@@ -136,7 +136,7 @@ void makeDungeon4() {
   } else {
     for(int i=0; i<5; i++){
   //    dungeon[roomSX[i] + random(roomEX[i] - roomSX[i] + 1)][roomSY[i] + random(roomEY[i] - roomSY[i] + 1)] = (random(7)+1)*10 + 1 + i;
-      buildStructure( i, random(6)*10 + 31 + i );
+      buildStructure( 0, random(6)*10 + 31 );
     }
   }
 
@@ -170,6 +170,5 @@ void makeDungeon4() {
 
 void buildStructure( byte room, byte structure){
   dungeon[roomSX[room] + random(roomEX[room] - roomSX[room] + 1)][roomSY[room] + random(roomEY[room] - roomSY[room] + 1)] = structure;
-
 }
 

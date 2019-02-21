@@ -26,73 +26,56 @@ byte randPS(byte i) {     //i=0,potion 1,scroll
   return count;
 }
 
-/*
-byte freeSlot() {
-  byte done = 0;
-  byte count = 0;
-  while (done == 0) {
-    if ( tng[count].ii == 0 ) {
-      done = 1;
-    } else {
-      count++;
-      if (count == TMAX) {
-        done = 1;
-      }
-    }
-  }
-  return count;
-}
-*/
-
 byte freeSlot() {
   for (uint8_t index = 0; index < TMAX; ++index) {
-    if(tng[index].ii == 0) {
+    if(id[index] == 0) {
       return index;
     }
   }
   return TMAX;
 }
 
+void swap(byte & left, byte & right) {
+  byte temporary = left;
+  left = right;
+  right = temporary;
+}
+
+void swap(char & left, char & right) {
+  byte temporary = left;
+  left = right;
+  right = temporary;
+}
+
 byte sortItem() {
   byte count = 0;
-  for (int i = 0; i < IMAX; i++) {
-    if (inv[i].ii == 0) {
-      inv[i].ii = 255;
+
+  for (byte i = 0; i < IMAX; ++i) {
+    if (ii[i] == 0) {
+      ii[i] = 255;
       count++;
     }
   }
-  for (int i = 0; i < IMAX; ++i) {
-    for (int j = i + 1; j < IMAX; ++j) {
-      if (inv[i].ii > inv[j].ii) {
-/*
-        byte tmp1 =  inv[i].ii;
-        byte tmp2 =  inv[i].i1;
-        byte tmp3 =  inv[i].i2;
-        byte tmp4 =  inv[i].i3;
-        byte tmp5 =  inv[i].i4;
-        inv[i].ii = inv[j].ii;
-        inv[i].i1 = inv[j].i1;
-        inv[i].i2 = inv[j].i2;
-        inv[i].i3 = inv[j].i3;
-        inv[i].i4 = inv[j].i4;
-        inv[j].ii = tmp1;
-        inv[j].i1 = tmp2;
-        inv[j].i2 = tmp3;
-        inv[j].i3 = tmp4;
-        inv[j].i4 = tmp5;
-*/
-        item titem = inv[i];
-        inv[i] = inv[j];
-        inv[j] = titem;
+
+  for (byte i = 0; i < IMAX; ++i) {
+    for (byte j = (i + 1); j < IMAX; ++j) {
+      if (ii[i] > ii[j]) {
+        swap(ii[i], ii[j]);
+        swap(i1[i], i1[j]);
+        swap(i2[i], i2[j]);
+        swap(i3[i], i3[j]);
+        swap(i4[i], i4[j]);
       }
     }
   }
-  for (int i = 0; i < IMAX; i++) {
-    if (inv[i].ii == 255) {
-      inv[i].ii = 0;
+
+  for (byte i = 0; i < IMAX; ++i) {
+    if (ii[i] == 255) {
+      ii[i] = 0;
     }
   }
-  return 20 - count;
+
+  return (20 - count);
 }
 
 byte findScroll(byte t) {
@@ -102,10 +85,10 @@ byte findScroll(byte t) {
 }
 
 void dropItem(byte x, byte y, byte st) {
-  if (bitRead(inv[st].i4, 4) == 0) {
-    if (inv[st].ii == 16 * 6 + findScroll(7) ) { //&& bitRead(sknow,7)==1){
-      inv[st].i1--;
-      if (inv[st].i1 == 0) deleteItem(st);
+  if (bitRead(i4[st], 4) == 0) {
+    if (ii[st] == 16 * 6 + findScroll(7) ) { //&& bitRead(sknow,7)==1){
+      i1[st]--;
+      if (i1[st] == 0) deleteItem(st);
       dungeon[x][y] = dungeon[x][y] % 10 + 190;
     } else if (thing[x][y] != 0) {
       setActiveMessage(3);
@@ -115,15 +98,11 @@ void dropItem(byte x, byte y, byte st) {
         setActiveMessage(4);
       } else {
         thing[x][y] = t + 1;
-/*
-        tng[t].ii = inv[st].ii;
-        tng[t].i1 = inv[st].i1;
-        tng[t].i2 = inv[st].i2;
-        tng[t].i3 = inv[st].i3;
-        tng[t].i4 = inv[st].i4;
-*/
-        tng[t] = inv[st];
-        
+        id[t] = ii[st];
+        t1[t] = i1[st];
+        t2[t] = i2[st];
+        t3[t] = i3[st];
+        t4[t] = i4[st];
         deleteItem(st);
       }
     }
@@ -133,12 +112,12 @@ void dropItem(byte x, byte y, byte st) {
 }
 
 void useItem(byte st) {
-  byte kind = inv[st].ii / 16;
-  byte vari = inv[st].ii % 16;
+  byte kind = ii[st] / 16;
+  byte vari = ii[st] % 16;
   //  if (hslep == 0) {
   if (kind == 2) {            //food
-    inv[st].i1--;
-    if (inv[st].i1 == 0) {
+    i1[st]--;
+    if (i1[st] == 0) {
       deleteItem(st);
     }
     eat(vari);
@@ -148,18 +127,18 @@ void useItem(byte st) {
     wield(st);
   } else if (kind == 5) {     //potion
     bitWrite(tknow[0], vari, 1);
-    inv[st].i1--;
-    if (inv[st].i1 == 0) {
+    i1[st]--;
+    if (i1[st] == 0) {
       deleteItem(st);
     }
     drink(vari);
     itmToGitm(5, vari, 1);
 //    addBuf(gitm);
   } else if (kind == 6) {     //scroll
-    if (hero.hblnd == 0) {
+    if (hblnd == 0) {
       bitWrite(tknow[1], vari, 1);
-      inv[st].i1--;
-      if (inv[st].i1 == 0) {
+      i1[st]--;
+      if (i1[st] == 0) {
         deleteItem(st);
       }
       readScroll(vari);
@@ -175,8 +154,8 @@ void useItem(byte st) {
     wield(st);
   } else if (kind == 8) {     //wand
     bitWrite(tknow[3], vari, 1);
-    if (inv[st].i2 > 0) {
-      inv[st].i2--;
+    if (i2[st] > 0) {
+      i2[st]--;
     } else {
       vari = 9;
     }
@@ -195,8 +174,8 @@ byte randMonst(byte d) {
   } else if (fm > 21) {
     fm = 21;
   }
-  if (to > 27) {
-    to = 26;
+  if (to > 26) {
+    to = 25;
   }
   return random(fm, to);
 }
@@ -204,7 +183,7 @@ byte randMonst(byte d) {
 void wakeUp() {
   for (int i = 0; i < 16; i++) {
     if (ms[i] / 32 == 2) {
-      if ((abs(mx[i] - hero.hx) + abs(my[i] - hero.hy)) <= 2) {
+      if ((abs(mx[i] - hx) + abs(my[i] - hy)) <= 2) {
         if (random(10) < 4 / (hasRing(0) + 1)) {
           ms[i] = 32 + ms[i] % 32;
         }
@@ -236,39 +215,34 @@ byte strToDmg(byte str) {
 }
 
 void deleteItem(byte i) {
-  inv[i].ii = 0;
-  inv[i].i1 = 0;
-  inv[i].i2 = 0;
-  inv[i].i3 = 0;
-  inv[i].i4 = 0;
-  hero.im--;
+  ii[i] = 0;
+  i1[i] = 0;
+  i2[i] = 0;
+  i3[i] = 0;
+  i4[i] = 0;
+  im--;
   sortItem();
 }
 
 void throwItem(byte i) {    //i=pack num 0 to 19
   char hdex = 0, hdmg = 0, dmg = 0;
   int dest = 0;
-  if (bitRead(inv[i].i4, 4) == 0 || (inv[i].ii / 16 == 3 && inv[i].ii % 16 >= 4)) {
-    //    if (bitRead(inv[i].i4, 4) == 0 && bitRead(inv[i].i4, 6) == 0) {
-    if ( bitRead(inv[i].i4, 6) == 0 || (bitRead(inv[i].i4, 6) == 1 && inv[i].ii / 16 != 3)) {
+  if (bitRead(i4[i], 4) == 0 || (ii[i] / 16 == 3 && ii[i] % 16 >= 4)) {
+    //    if (bitRead(i4[i], 4) == 0 && bitRead(i4[i], 6) == 0) {
+    if ( bitRead(i4[i], 6) == 0 || (bitRead(i4[i], 6) == 1 && ii[i] / 16 != 3)) {
       byte dir = askDir();
-      if ( equip(3, 1) != 0 && inv[equip(3, 1) - 1].ii % 16 == 3) {
+      if ( equip(3, 1) != 0 && ii[equip(3, 1) - 1] % 16 == 3) {
         dest = checkHit(dir, 20);
       } else {
-        dest = checkHit(dir, hero.st / 2);
+        dest = checkHit(dir, st / 2);
       }
-/*
-      ftng.ii = inv[i].ii;
-      ftng.i1 = 1;
-      ftng.i2 = inv[i].i2;
-      ftng.i3 = inv[i].i3;
-      ftng.i4 = inv[i].i4;
-*/
-      ftng = inv[i];
-      ftng.i1 = 1;
-      
-      inv[i].i1--;
-      if (inv[i].i1 == 0) {
+      fi = ii[i];
+      f1 = 1;
+      f2 = i2[i];
+      f3 = i3[i];
+      f4 = i4[i];
+      i1[i]--;
+      if (i1[i] == 0) {
         deleteItem(i);
       }
 
@@ -277,38 +251,38 @@ void throwItem(byte i) {    //i=pack num 0 to 19
       char desty = (dest % 256) / 21;
 
       if (mon == 0) {
-        dropThrown(destx, desty, ftng.ii, ftng.i1, ftng.i2, ftng.i3, ftng.i4);
+        dropThrown(destx, desty, fi, f1, f2, f3, f4);
       } else {  // check hit
-        if ( ftng.ii / 16 == 3 ) {
-          hdex = pgm_read_byte(wstat[ftng.ii % 16]) + ftng.i2;
+        if ( fi / 16 == 3 ) {
+          hdex = pgm_read_byte(wstat[fi % 16]) + f2;
         } else {
           hdex = 1;
         }
         //        Serial.println((int)hdex);
         byte rr = random(100);
-        byte prob = 40 + hdex * 3 + hero.lv * 2;
-        if ( inv[equip(3, 1) - 1].ii % 16 == ftng.ii % 16 || (ftng.ii == 3 * 16 + 5 && inv[equip(3, 1) - 1].ii % 16 == 3)) {
+        byte prob = 40 + hdex * 3 + lv * 2;
+        if ( ii[equip(3, 1) - 1] % 16 == fi % 16 || (fi == 3 * 16 + 5 && ii[equip(3, 1) - 1] % 16 == 3)) {
           prob = prob * 4 / 3;
         }
         //        Serial.println((int)prob);
         if (rr < prob) {        //hit
           flashMonst(mon - 1);
-          if ( ftng.ii / 16 == 3) {
-            hdmg = pgm_read_byte(wstat[ftng.ii % 16] + 1) + ftng.i3;
+          if ( fi / 16 == 3) {
+            hdmg = pgm_read_byte(wstat[fi % 16] + 1) + f3;
           } else {
             hdmg = 0;
           }
-          if (ftng.ii / 16 == 5) {
-            hitPotion(ftng.ii % 16, mon);
-          } else if (ftng.ii / 16 == 8 && random(4) != 0 ) {
-            hitWand(ftng.ii % 16, mon, destx, desty);
+          if (fi / 16 == 5) {
+            hitPotion(fi % 16, mon);
+          } else if (fi / 16 == 8 && random(4) != 0 ) {
+            hitWand(fi % 16, mon, destx, desty);
           } else {
-            if ( ftng.ii / 16 == 3) {
-              dmg = (random(hdex, hdex * hdmg) * 2 + strToDmg(hero.st + hero.rstr) * 2 + hero.rdex + hero.lv + 1) / 2;
+            if ( fi / 16 == 3) {
+              dmg = (random(hdex, hdex * hdmg) * 2 + strToDmg(st + rstr) * 2 + rdex + lv + 1) / 2;
             } else {
-              dmg = ( -2 + strToDmg(hero.st + hero.rstr) * 2 + hero.rdex + hero.lv + 1) / 2;
+              dmg = ( -2 + strToDmg(st + rstr) * 2 + rdex + lv + 1) / 2;
             }
-            if ( inv[equip(3, 1) - 1].ii % 16 == ftng.ii % 16 || (ftng.ii == 3 * 16 + 5 && inv[equip(3, 1) - 1].ii % 16 == 3)) {
+            if ( ii[equip(3, 1) - 1] % 16 == fi % 16 || (fi == 3 * 16 + 5 && ii[equip(3, 1) - 1] % 16 == 3)) {
               dmg = dmg * 4 / 3;
             }
             //            Serial.println((int)dmg);
@@ -316,15 +290,15 @@ void throwItem(byte i) {    //i=pack num 0 to 19
           }
         } else {                //miss
           //      Serial.println(F("miss"));
-          dropThrown(destx, desty, ftng.ii, ftng.i1, ftng.i2, ftng.i3, ftng.i4);
+          dropThrown(destx, desty, fi, f1, f2, f3, f4);
         }
       }
     } else {
-      bitWrite(inv[i].i4, 1, 1);            // I notice it is cursed
+      bitWrite(i4[i], 1, 1);            // I notice it is cursed
       if (equip(3, 1) != 0) {           // weapon equiped now remove
-        bitWrite(inv[equip(3, 1) - 1].i4, 4, 0);
+        bitWrite(i4[equip(3, 1) - 1], 4, 0);
       }
-      bitWrite(inv[i].i4, 4, 1);            // equip it enforced
+      bitWrite(i4[i], 4, 1);            // equip it enforced
       setActiveMessage(9);    // It cursed.
     }
   } else {
@@ -347,11 +321,11 @@ void dropThrown(byte x, byte y, byte fi, byte f1, char f2, char f3, byte f4) {
   } else {    //drop Item
     byte t = freeSlot();
     thing[x + (destd - 1) % 3 - 1][y + (destd - 1) / 3 - 1] = t + 1;
-    tng[t].ii = fi;
-    tng[t].i1 = 1;
-    tng[t].i2 = f2;
-    tng[t].i3 = f3;
-    tng[t].i4 = f4;
+    id[t] = fi;
+    t1[t] = 1;
+    t2[t] = f2;
+    t3[t] = f3;
+    t4[t] = f4;
   }
 }
 
@@ -415,7 +389,7 @@ void hitWand(byte vari, byte mon, byte x, byte y) {
       break;
     case 7:     // missile
 //      mh[mon - 1] = mh[mon - 1] / 2;
-      dmg=hero.lv*5;
+      dmg=lv*5;
       checkMonst( mon-1, ms[mon-1]%32, dmg, x, y);
       break;
     case 8:
@@ -428,7 +402,7 @@ void hitWand(byte vari, byte mon, byte x, byte y) {
 
 byte askDir() {
   arduboy.clear();
-  if (hero.hblnd == 0) {
+  if (hblnd == 0) {
     drawMap();
     drawHero();
     drawThing();
@@ -441,7 +415,7 @@ byte askDir() {
   showMsg();
   arduboy.display();
   byte dir = inputWait();
-  if (hero.hconf == 0) {
+  if (hconf == 0) {
     return dir;
   } else {
     return random(4) + 1;
