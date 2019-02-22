@@ -8,7 +8,9 @@ void flashHero(){
   locate(hero.hx, hero.hy);
   font5x7.print(' ');
   arduboy.display();
+  arduboy.digitalWriteRGB(BLUE_LED, RGB_ON);
   delay(100);
+  arduboy.digitalWriteRGB(BLUE_LED, RGB_OFF);
 }
 
 void flashMonst(byte num){
@@ -25,7 +27,9 @@ void flashMonst(byte num){
     font5x7.print(' ');    
   }
   arduboy.display();
+  arduboy.digitalWriteRGB(RED_LED, RGB_ON);
   delay(100);
+  arduboy.digitalWriteRGB(RED_LED, RGB_OFF);
 }
 
 void initHero(){
