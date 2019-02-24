@@ -7,24 +7,12 @@ byte getKnown(byte x, byte y) {
 }
 
 void clearKnown() {
-  for (int i = 0; i < 21; i++) {
-    for (int j = 0; j < 8; j++) {
-      monst[i][j] = 0;
-      thing[i][j] = 0;
-    }
-  }
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 8; j++) {
-      known[i][j] = 0;
-    }
-  }
-  for (int i = 0; i < TMAX; i++) {
-    tng[i].ii = 0;
-    tng[i].i1 = 0;
-    tng[i].i2 = 0;
-    tng[i].i3 = 0;
-    tng[i].i4 = 0;
-  }
+  
+  memset(monst, 0, sizeof(monst));  //thanks @Dreamer3
+  memset(thing, 0, sizeof(thing));
+  memset(known, 0, sizeof(known));
+  memset(tng, 0, sizeof(tng));
+
   for (int i = 0; i < MMAX; i++) {
     mx[i] = 0;
     my[i] = 0;
@@ -36,11 +24,7 @@ void clearKnown() {
 }
 
 void allKnown() {
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 8; j++) {
-      known[i][j] = 255;
-    }
-  }
+  memset(known, 255, sizeof(known));    //thanks @Dreamer3
 }
 
 void makeKnown() {
@@ -69,11 +53,7 @@ void makeKnown() {
 }
 
 void clearDungeon() {
-  for (int x = 0; x < 21; x++) {
-    for (int y = 0; y < 8; y++) {
-      dungeon[x][y] = 0;
-    }
-  }
+  memset(dungeon, 0, sizeof(dungeon));    //thanks Dreamer3
 }
 
 void locate(int x, int y) {
@@ -84,14 +64,10 @@ void drawMap() {    //@Pharap's sharp eye
   for (int i = 0; i < 21; i++) {
     for (int j = 0; j < 8; j++) {
       locate(i, j);
-      //      if (known[i][j] == 1) {
-
       char c = ' ';
       if (getKnown(i, j) == 1) {
         if (dungeon[i][j] == 0) {
           c = ' '; //arduboy.print(F(" "));
-//        } else if (dungeon[i][j] >= 1 && dungeon[i][j] <= 6 && isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0) {
-//          if ( dungeon[i][j] < 40 && dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy] % 10 ) {
         } else if (((dungeon[i][j] >= 1 && dungeon[i][j] <= 6) || (dungeon[i][j] >= 31 && dungeon[i][j] <= 106)) 
           && isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0) {
           if ( dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy] % 10 ) {
@@ -106,12 +82,6 @@ void drawMap() {    //@Pharap's sharp eye
         } else if (dungeon[i][j] >= 21 && dungeon[i][j] <= 26) {
           c = '+'; //arduboy.print(F("+"));
 
-//        } else if (dungeon[i][j] >= 31 && dungeon[i][j] <= 106) {
-//          if(dungeon[i][j]%10 == dungeon[hero.hx][hero.hy]%10){
-//            c = '.'; //arduboy.print(F("t"));
-//          } else {
-//            c = ' ';
-//          }
         } else if (dungeon[i][j] >= 111 && dungeon[i][j] <= 186) {
           c = '_'; //arduboy.print(F("^"));
         
@@ -163,7 +133,6 @@ void drawMonst() {
         if (isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0 && dungeon[hero.hx][hero.hy] != 8 &&
             dungeon[hero.hx][hero.hy] % 10 == dungeon[mx[i]][my[i]] % 10) {
           locate(mx[i], my[i]);
-          //        arduboy.print((char)(65 + i));
           drawMonstSub(i);
         }
         if (abs(hero.hx - mx[i]) <= 1 && abs(hero.hy - my[i]) <= 1) {
@@ -172,7 +141,6 @@ void drawMonst() {
         }
       } else {
         locate(mx[i], my[i]);
-        //        arduboy.print((char)(65 + i));
         drawMonstSub(i);
       }
     }
@@ -222,18 +190,15 @@ void moveMonst() {
             r = 5;
           } else if (ms[i] % 32 == 21 && dungeon[hero.hx][hero.hy] != 8 &&
                      dungeon[mx[i]][my[i]] % 10 == dungeon[hero.hx][hero.hy] % 10 && bitRead(m1[i], 3) == 1) {
-            flashHero();
+            flashHero('?');
             setActiveMessage(18);
             hero.hconf = 10;
             bitWrite(m1[i], 3, 0);
           } else if (ms[i] % 32 == 25 && canBless() > 0 && random(2) == 0) {
-            flashHero();
+            flashHero('*');
             setActiveMessage(19);
             byte dmg = random(22-hero.lv);
             charon(dmg,3);
-//            if( hero.hp > dmg ){
-//              hero.hp = hero.hp - dmg; 
-//            }
           } else {
             
             char d=1;
@@ -490,7 +455,7 @@ void placeThingXY(byte ix, byte iy, byte r) {
             break;
         }
         break;
-      case 8:
+      case 8: //wand
         vari = random(WDMAX);
         tng[t].ii = 128 + vari;
         tng[t].i1 = 1;
@@ -564,15 +529,8 @@ void checkThing(byte x, byte y) {
       }
       if (done == 0) {
         if (hero.im == IMAX) {
-          setActiveMessage(2);
+//          setActiveMessage(2);
         } else {
-/*
-          inv[hero.im].ii = tng[thing[x][y] - 1].ii;
-          inv[hero.im].i1 = tng[thing[x][y] - 1].i1;
-          inv[hero.im].i2 = tng[thing[x][y] - 1].i2;
-          inv[hero.im].i3 = tng[thing[x][y] - 1].i3;
-          inv[hero.im].i4 = tng[thing[x][y] - 1].i4;
-*/
           inv[hero.im] = tng[thing[x][y]-1];
           
           deleteThing(thing[x][y] - 1);
@@ -675,4 +633,3 @@ void tweatHero() {
     search();
   }
 }
-

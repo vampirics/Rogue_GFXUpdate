@@ -1,16 +1,15 @@
 void eat(byte r) {
-/*
+  byte bonus=0;
   if (r == 0 && random(3) == 0) {
-    mess(7);
-//    hh = hh / 3 + 700 + random(200);
-    hh = hh / 3 + 300 + random(50);
-    ex = ex + 2;
+    setActiveMessage(7);
+//    hero.hh = hero.hh / 3 + 300 + random(50); //    hh = hh / 3 + 700 + random(200);
+    hero.ex = hero.ex + 2;
   } else {
-*/
     setActiveMessage(8);
-//    hh = hh / 3 + 900 + random(200);
-    hero.hh = hero.hh / 3 + 350 + random(50);
-//  }
+    bonus=50;
+//    hero.hh = hero.hh / 3 + 350 + random(50); //    hh = hh / 3 + 900 + random(200);
+  }
+  hero.hh = hero.hh / 3 + 300 + bonus + random(50); //    hh = hh / 3 + 900 + random(200);
 }
 
 void wield(byte r) {
@@ -312,4 +311,3 @@ byte findPlace(byte x, byte y, byte tm) {   //tm=0:thing, 1:monst
   monst[hero.hx][hero.hy] = 0;
   return result;
 }
-

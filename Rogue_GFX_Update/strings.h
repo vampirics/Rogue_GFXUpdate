@@ -280,7 +280,7 @@ const char message18[] PROGMEM = "graced";
 const char message19[] PROGMEM = "burned";
 const char message20[] PROGMEM = "level down";
 const char message21[] PROGMEM = "drained";
-const char message22[] PROGMEM = "ZZZ'''";
+const char message22[] PROGMEM = "zzz'''";
 
 const char message23[] PROGMEM = "trapdoor";
 const char message24[] PROGMEM = "arrow trap";
@@ -328,5 +328,5 @@ const char * const messages[31] PROGMEM =
   message30
 };
 
-const char selectorString[] PROGMEM = "> ";
-const char blankString[] PROGMEM = "  ";
+//const char selectorString[] PROGMEM = "> ";
+//const char blankString[] PROGMEM = "  ";

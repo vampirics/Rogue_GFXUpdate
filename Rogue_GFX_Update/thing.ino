@@ -104,9 +104,13 @@ byte findScroll(byte t) {
 void dropItem(byte x, byte y, byte st) {
   if (bitRead(inv[st].i4, 4) == 0) {
     if (inv[st].ii == 16 * 6 + findScroll(7) ) { //&& bitRead(sknow,7)==1){
-      inv[st].i1--;
-      if (inv[st].i1 == 0) deleteItem(st);
-      dungeon[x][y] = dungeon[x][y] % 10 + 190;
+      if(dungeon[x][y] >= 11 && dungeon[x][y] <=16){
+        setActiveMessage(1);
+      } else {
+        inv[st].i1--;
+        if (inv[st].i1 == 0) deleteItem(st);
+        dungeon[x][y] = dungeon[x][y] % 10 + 190;
+      }
     } else if (thing[x][y] != 0) {
       setActiveMessage(3);
     } else {
@@ -292,7 +296,7 @@ void throwItem(byte i) {    //i=pack num 0 to 19
         }
         //        Serial.println((int)prob);
         if (rr < prob) {        //hit
-          flashMonst(mon - 1);
+          flashMonst(mon - 1,'/');
           if ( ftng.ii / 16 == 3) {
             hdmg = pgm_read_byte(wstat[ftng.ii % 16] + 1) + ftng.i3;
           } else {
@@ -356,7 +360,7 @@ void dropThrown(byte x, byte y, byte fi, byte f1, char f2, char f3, byte f4) {
 }
 
 void hitPotion(byte vari, byte mon) { //mon=1 to 26 ID
-  flashMonst(mon - 1);
+  flashMonst(mon - 1,'!');
   switch (ttab[0][vari]) {
     case 0:
     case 2:
@@ -381,7 +385,7 @@ void hitPotion(byte vari, byte mon) { //mon=1 to 26 ID
 
 void hitWand(byte vari, byte mon, byte x, byte y) {
   byte dmg=0;
-  flashMonst(mon - 1);
+  flashMonst(mon - 1,'*');
   switch (ttab[3][vari]) {
     case 0:
       ms[mon - 1] = 0;
@@ -447,4 +451,3 @@ byte askDir() {
     return random(4) + 1;
   }
 }
-

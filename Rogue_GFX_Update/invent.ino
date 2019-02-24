@@ -21,28 +21,19 @@ void drawInventry(byte st, byte mode) {
   byte ed;
   arduboy.clear();
   locate(0, 0);
-  if(mode==0){
-//    arduboy.setTextBackground(WHITE);
-//    arduboy.fillRect(0,0,128,8,WHITE);
-//    font5x7.setTextColor(BLACK);
-    font5x7.print(F("###Inventory######"));
-    font5x7.print( hero.hh );
-    font5x7.print(F("  "));
-  } else {
+  if(mode==1){
     font5x7.print(F(" which}"));
   }
-  locate(0, 1);
-//  arduboy.setTextBackground(BLACK);
-//  font5x7.setTextColor(WHITE);
+  locate(0, 1 - !mode );
   font5x7.print('>');
 
-  if (st + 7 > hero.im) {
+  if (st + 8 - mode > hero.im) {
     ed = hero.im;
   } else {
-    ed = st + 7;
+    ed = st + 8 - mode;
   }
   for (int i = st; i < ed; i++) {
-    locate(1, i - st + 1);
+    locate(1, i - st + 1 - !mode );
     char buff;
     if(bitRead(inv[i].i4,3)==1){
       buff='{';
@@ -119,23 +110,15 @@ byte inventry(byte mode) {
 
 byte action(byte st) {
   byte curs = 0;
-//  arduboy.setTextBackground(WHITE);
-//  arduboy.fillRect(6,8,75,8,WHITE);
-//  font5x7.setTextColor(BLACK);
-  locate(2, 1);
-  font5x7.print(F("Action       "));
-//  arduboy.setTextBackground(BLACK);
-//  font5x7.setTextColor(WHITE);
-  locate(1, 2);
+  locate(1, 1);
   font5x7.print(F("  use          "));
-  locate(1, 3);
+  locate(1, 2);
   font5x7.print(F("  throw        "));
-  locate(1, 4);
+  locate(1, 3);
   font5x7.print(F("  drop         "));
-  locate(1, 5);
+  locate(1, 4);
   font5x7.print(F("               "));
-
-  locate(1, curs + 2);
+  locate(1, curs + 1);
   font5x7.print('>');
 
   arduboy.display();
@@ -145,20 +128,20 @@ byte action(byte st) {
     switch (a) {
       case 2:
         if (curs > 0) {
-          locate(1, curs + 2);
+          locate(1, curs + 1);
           font5x7.print(' ');
           curs--;
-          locate(1, curs + 2);
+          locate(1, curs + 1);
           font5x7.print('>');
           arduboy.display();
         }
         break;
       case 4:
         if (curs < 2) {
-          locate(1, curs + 2);
+          locate(1, curs + 1);
           font5x7.print(' ');
           curs++;
-          locate(1, curs + 2);
+          locate(1, curs + 1);
           font5x7.print('>');
           arduboy.display();
         }
@@ -192,11 +175,6 @@ byte action(byte st) {
             setActiveMessage(22);
           }
           ex=1;
-//        } else if(curs==3){
-//          saveStatus();
-//          loadStatus();
-//          gstate=2;
-//          ex=1;
         }
         break;
       case 6:
@@ -217,35 +195,31 @@ void showStatus() {
   if(hero.hblnd==0) drawThing();
   if(hero.hblnd==0) drawMonst();
 
-//  arduboy.setTextBackground(WHITE);
-//  arduboy.fillRect(h*6,0,60,8,WHITE);
-//  font5x7.setTextColor(BLACK);
-  locate(h, 0);
-  font5x7.print(F("|Status"));
-//  arduboy.setTextBackground(BLACK);
-//  font5x7.setTextColor(WHITE);
-  for (int i = 1; i < 8; i++) {
+  for (int i = 0; i < 8; i++) {
     locate(h, i);
     font5x7.print(F("          "));
   }
-  locate(h, 1);
-  font5x7.print(F("|Lv;"));
+  locate(h, 0);
+  font5x7.print(F("Lv;"));
   font5x7.print(hero.dlv);
-  locate(h, 2);
-  font5x7.print(F("|Au;"));
+  locate(h, 1);
+  font5x7.print(F("Au;"));
   font5x7.print(hero.au);
-  locate(h, 3);
-  font5x7.print(F("|Hp;"));
+  locate(h, 2);
+  font5x7.print(F("Hp;"));
   font5x7.print(hero.hp);
   font5x7.print('~');
   font5x7.print(hero.hpm);
+  locate(h, 3);
+  font5x7.print(F("Hg;"));
+  font5x7.print(hero.hh);
   locate(h, 4);
-  font5x7.print(F("|St;"));
+  font5x7.print(F("St;"));
   font5x7.print(hero.st);
   font5x7.print('~');
   font5x7.print(hero.stm);
   locate(h, 5);
-  font5x7.print(F("|AC;"));
+  font5x7.print(F("AC;"));
   byte a=equip(4,1);
   byte ac=0;
   if(a==0){
@@ -255,12 +229,10 @@ void showStatus() {
   }
   font5x7.print((int)ac);
   locate(h, 6);
-  font5x7.print(F("|Ex;"));
+  font5x7.print(F("Ex;"));
   font5x7.print(hero.lv);
   font5x7.print('~');
-  locate(h, 7);
-  font5x7.print(F("|"));
-  locate(h + 4, 7);
+  locate(h + 3, 7);
   font5x7.print(hero.ex);
 }
 

@@ -1,5 +1,4 @@
 void title() {
-//  arduboy.setRGBled(0, 0, 0);
   locate(6, 2);
   font5x7.print(F("@ Rogue"));
   locate(5, 5);
@@ -37,21 +36,12 @@ void title() {
     clearKnown();
     buildDungeon();
     setActiveMessage(0);
-    //    clearDungeon();
-    //    makeDungeon4();
-    //    placeMonst();
-    //    placeThing();
-    //    mess(0);
-    //    addBuf( dlv );
-//    welc = 1;
     gstate = 1;
   }
   if (arduboy.justPressed(B_BUTTON) ){ //&& welc == 1) {
     if(EEPROM.read(20)==1){
       EEPROM.update(20,0);
       loadStatus();
-//      hero.dlv++;
-//      buildDungeon();
       gstate = 5;
     }
   }
@@ -135,7 +125,6 @@ void winner() {
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
-//  welc = 0;
 
   locate(0, 3);
   font5x7.print(F(" , CONGRATULATION ,  "));
@@ -152,17 +141,18 @@ void winner() {
 
 void score() {
 
+  //  byte rank = checkHiScore();
+
   locate(0, 0);
   font5x7.print(F("- ) Hall Of Fame )  -"));
 
   for (int i = 0; i < 5; i++) {
     if (rank == i + 1) {
     locate(0, 2 + i);
-    font5x7.print('>');
+    font5x7.print('>*');
     } else {
       font5x7.setTextColor(WHITE);
     }
-
     locate(1, 2 + i);
     font5x7.print(i + 1);
     locate(3, 2 + i);
@@ -251,8 +241,11 @@ void gameloop() {
         } else {
           gstate = 5;
         }
+//        gstate=5;
+//        buildDungeon();
       } else {
         //      ss = 1;
+//        clearBuf();
         search();
         wakeUp();
         tweatHero();
@@ -284,7 +277,6 @@ void buildDungeon() {
   makeDungeon4();
   placeMonst();
   placeThing();
-
 }
 
 void heroMove(byte dir) {
@@ -308,7 +300,6 @@ void heroMove(byte dir) {
         hero.hy = hero.hy + dy;
       }
       setActiveMessage(29);
-//      clearBuf();
       if (hero.hlevi == 0) {
         checkThing(hero.hx, hero.hy);
         if(dungeon[hero.hx][hero.hy] >= 31 && dungeon[hero.hx][hero.hy] <= 106){
@@ -342,7 +333,7 @@ void heroMove(byte dir) {
 void traped(byte vari){
   byte dmg=0;
   if(random(2)==0){
-    flashHero();
+    flashHero('^');
   
     switch (vari){
       case 0:     //door
@@ -356,11 +347,11 @@ void traped(byte vari){
       case 2:     //sleep
         if(hero.hslep==0) hero.hslep=5;
         break;
-      case 3:     //teleport
+      case 3:     //telport
         teleportHero();
         break;
       case 4:     //poison
-        if (hero.st > 3 || hasRing(5) == 0) hero.st--;
+        if (hero.st > 3 && hasRing(5) == 0) hero.st--;
         break;
       case 5:     //rust
         byte eq = equip(4, 1);
@@ -373,6 +364,10 @@ void traped(byte vari){
     }
   }
   setActiveMessage( 23 + vari);
+//  for(int i=0; i<8; i++){
+//    gbuf[i]=pgm_read_byte(trap[vari]+i);
+//  }
+//  addBuf(" trap");
 }
 
 void charon(byte dmg, byte reason){

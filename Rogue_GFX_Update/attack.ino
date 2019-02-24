@@ -10,7 +10,7 @@ void hitMonst(byte mm, byte r, char dx, char dy) { //mm=monst[x][y](1 to 16) r=k
   byte prob = 40 + hdex * 3 + hero.lv * 2;
 
   if (rr < prob) {
-    flashMonst(mm - 1);
+    flashMonst(mm - 1,' ');
     dmg = (random(hdex, hdex * hdmg) * 2 + strToDmg(hero.st + hero.rstr) * 2 + hero.rdex + hero.lv + 1) / 2;
     checkMonst(mm - 1, r, dmg, hero.hx+dx, hero.hy+dy);
   }
@@ -64,7 +64,7 @@ void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
 //    } else {
 //      flashHero();
 //      hero.hp = hero.hp - dmg;
-    flashHero();
+    flashHero(' ');
     charon(dmg, i+4); 
       if (bitRead(m1[r], 3) == 1) {
         specialAttack( i ,r );
@@ -92,7 +92,7 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
       }
       break;
     case 6:     //R.snake
-      if (hero.st > 3 || hasRing(5) == 0) {
+      if (hero.st > 3 && hasRing(5) == 0) {
         if (random(5) == 0) {
           hit = true; //flashHero();
           setActiveMessage(14);
@@ -166,6 +166,5 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
       }
       break;
   }
-  if(hit) flashHero();
+  if(hit) flashHero(' ');
 }
-
