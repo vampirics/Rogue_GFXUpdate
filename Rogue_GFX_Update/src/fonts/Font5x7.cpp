@@ -108,6 +108,12 @@ const uint8_t PROGMEM font_images[] = {
 
 };
 
+/*
+const uint8_t PROGMEM back_ground[] = {
+6, 8,
+0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+};
+*/
 
 Font5x7::Font5x7(uint8_t lineSpacing) {
 
