@@ -205,26 +205,26 @@ void showStatus() {
     font5x7.print(F("          "));
   }
   locate(h, 0);
-  font5x7.print(F("|Lv;"));
+  font5x7.print(F("| Lv;"));
   font5x7.print(hero.dlv);
   locate(h, 1);
-  font5x7.print(F("|Au;"));
+  font5x7.print(F("| Au;"));
   font5x7.print(hero.au);
   locate(h, 2);
-  font5x7.print(F("|Hp;"));
+  font5x7.print(F("| Hp;"));
   font5x7.print(hero.hp);
   font5x7.print('~');
   font5x7.print(hero.hpm);
   locate(h, 3);
-  font5x7.print(F("|Hg;"));
+  font5x7.print(F("| Hg;"));
   font5x7.print(hero.hh);
   locate(h, 4);
-  font5x7.print(F("|St;"));
+  font5x7.print(F("| St;"));
   font5x7.print(hero.st);
   font5x7.print('~');
   font5x7.print(hero.stm);
   locate(h, 5);
-  font5x7.print(F("|AC;"));
+  font5x7.print(F("| AC;"));
   byte a=equip(4,1);
   byte ac=0;
   if(a==0){
@@ -234,12 +234,12 @@ void showStatus() {
   }
   font5x7.print((int)ac);
   locate(h, 6);
-  font5x7.print(F("|Ex;"));
+  font5x7.print(F("| Ex;"));
   font5x7.print(hero.lv);
   font5x7.print('~');
   locate(h, 7);
   font5x7.print(F("|"));
-  locate(h + 4, 7);
+  locate(h + 5, 7);
   font5x7.print(hero.ex);
 }
 
