@@ -182,7 +182,7 @@ void useItem(byte st) {
     if (inv[st].i2 > 0) {
       inv[st].i2--;
     } else {
-      vari = 9;
+      vari = ttab[3][9]; //9;
     }
     zap(vari);
   }

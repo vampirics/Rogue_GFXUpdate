@@ -18,6 +18,7 @@ void flashMonst(byte num, char sym){
     drawThing();
     drawMonst();
   }
+
   locate(mx[num], my[num]);
   if(hero.hblnd == 0 && bitRead(m1[num],6)==0){
     font5x7.print(sym);
@@ -34,23 +35,13 @@ void initHero(){
 
   for(int i=0; i<IMAX; i++){
     deleteItem(i);
-//    ii[i]=0;
-//    i1[i]=0;
-//    i2[i]=0;
-//    i3[i]=0;
-//    i4[i]=0;
   }
   memset(&hero, 0, sizeof(hero));
     
-//  hero.hx = 0, hero.hy = 0, 
+
   
   hero.im = 5, hero.dlv = 1, hero.st = 16, hero.stm = 16, hero.lv = 1;
 
-//  hero.hconf = 0, hero.hblnd = 0, hero.hhall = 0, hero.hfast = 0, hero.hslep = 0;
-//  hero.hmdet = 0, hero.hisee = 0, hero.hlevi = 0, hero.hheld = 0;
-//  hero.rdex = 0, hero.rstr = 0;
-
-//  hero.au = 0, hero.hp = 16, hero.hpm = 16, hero.ex = 0, hero.ht = 0, hero.hh = 400, hero.nl = 10;
   hero.hp = 16, hero.hpm = 16, hero.hh = 400, hero.nl = 10;
 
   inv[0].ii = 2 * 16 + 0; inv[0].i1 =  1; inv[0].i2 = 0; inv[0].i3 = 0; inv[0].i4 = 0b10000000;
@@ -58,8 +49,6 @@ void initHero(){
   inv[2].ii = 3 * 16 + 3; inv[2].i1 =  1; inv[2].i2 = 1; inv[2].i3 = 0; inv[2].i4 = 0b00100000;
   inv[3].ii = 3 * 16 + 5; inv[3].i1 = 30; inv[3].i2 = 0; inv[3].i3 = 0; inv[3].i4 = 0b10100000;
   inv[4].ii = 4 * 16 + 1; inv[4].i1 =  1; inv[4].i2 = 1; inv[4].i3 = 0; inv[4].i4 = 0b00110000;
-//  inv[5].ii = 6 * 16 + findScroll(7); inv[5].i1 =  5; inv[5].i2 = 0; inv[5].i3 = 0; inv[5].i4 = 0b10000000;
-//  inv[6].ii = 8 * 16 + 0; inv[6].i1 =  1; inv[6].i2 = 1; inv[6].i3 = 0; inv[6].i4 = 0b00000000;
 
 }
 

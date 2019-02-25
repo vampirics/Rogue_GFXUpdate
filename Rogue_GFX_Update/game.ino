@@ -76,6 +76,7 @@ void gameover() {
   adepth = 26;
   EEPROM.update(20,0);
 
+
   locate(2, 1);
   font5x7.print(F("( REST IN PEACE ("));
   locate(5, 3);
@@ -141,7 +142,6 @@ void winner() {
 
 void score() {
 
-  //  byte rank = checkHiScore();
 
   locate(0, 0);
   font5x7.print(F("- ) Hall Of Fame )  -"));
@@ -149,9 +149,10 @@ void score() {
   for (int i = 0; i < 5; i++) {
     if (rank == i + 1) {
     locate(0, 2 + i);
-    font5x7.print('>*');
+    font5x7.print('>');
     } else {
-      font5x7.setTextColor(WHITE);
+//      arduboy.setTextBackground(BLACK);
+//      font5x7.setTextColor(WHITE);
     }
     locate(1, 2 + i);
     font5x7.print(i + 1);
@@ -241,8 +242,6 @@ void gameloop() {
         } else {
           gstate = 5;
         }
-//        gstate=5;
-//        buildDungeon();
       } else {
         //      ss = 1;
 //        clearBuf();
@@ -257,7 +256,6 @@ void gameloop() {
   if (arduboy.justPressed(B_BUTTON)) {
     ss = 0;
     setActiveMessage(29);
-//    clearBuf();
     inventry(0);
   }
 
@@ -300,6 +298,7 @@ void heroMove(byte dir) {
         hero.hy = hero.hy + dy;
       }
       setActiveMessage(29);
+//      clearBuf();
       if (hero.hlevi == 0) {
         checkThing(hero.hx, hero.hy);
         if(dungeon[hero.hx][hero.hy] >= 31 && dungeon[hero.hx][hero.hy] <= 106){
@@ -314,7 +313,6 @@ void heroMove(byte dir) {
     mm = monst[hero.hx + dx][hero.hy + dy];
     r = ms[mm - 1] % 32;
     setActiveMessage(29);
-//    clearBuf();
     hitMonst(mm, r, dx, dy);
   }
   wakeUp();
@@ -364,10 +362,6 @@ void traped(byte vari){
     }
   }
   setActiveMessage( 23 + vari);
-//  for(int i=0; i<8; i++){
-//    gbuf[i]=pgm_read_byte(trap[vari]+i);
-//  }
-//  addBuf(" trap");
 }
 
 void charon(byte dmg, byte reason){

@@ -54,6 +54,11 @@ void makeKnown() {
 
 void clearDungeon() {
   memset(dungeon, 0, sizeof(dungeon));    //thanks Dreamer3
+//  for (int x = 0; x < 21; x++) {
+//    for (int y = 0; y < 8; y++) {
+//      dungeon[x][y] = 0;
+//    }
+//  }
 }
 
 void locate(int x, int y) {
@@ -64,10 +69,14 @@ void drawMap() {    //@Pharap's sharp eye
   for (int i = 0; i < 21; i++) {
     for (int j = 0; j < 8; j++) {
       locate(i, j);
+      //      if (known[i][j] == 1) {
+
       char c = ' ';
       if (getKnown(i, j) == 1) {
         if (dungeon[i][j] == 0) {
           c = ' '; //arduboy.print(F(" "));
+//        } else if (dungeon[i][j] >= 1 && dungeon[i][j] <= 6 && isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0) {
+//          if ( dungeon[i][j] < 40 && dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy] % 10 ) {
         } else if (((dungeon[i][j] >= 1 && dungeon[i][j] <= 6) || (dungeon[i][j] >= 31 && dungeon[i][j] <= 106)) 
           && isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0) {
           if ( dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy] % 10 ) {
@@ -82,6 +91,12 @@ void drawMap() {    //@Pharap's sharp eye
         } else if (dungeon[i][j] >= 21 && dungeon[i][j] <= 26) {
           c = '+'; //arduboy.print(F("+"));
 
+//        } else if (dungeon[i][j] >= 31 && dungeon[i][j] <= 106) {
+//          if(dungeon[i][j]%10 == dungeon[hero.hx][hero.hy]%10){
+//            c = '.'; //arduboy.print(F("t"));
+//          } else {
+//            c = ' ';
+//          }
         } else if (dungeon[i][j] >= 111 && dungeon[i][j] <= 186) {
           c = '_'; //arduboy.print(F("^"));
         
@@ -133,6 +148,7 @@ void drawMonst() {
         if (isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0 && dungeon[hero.hx][hero.hy] != 8 &&
             dungeon[hero.hx][hero.hy] % 10 == dungeon[mx[i]][my[i]] % 10) {
           locate(mx[i], my[i]);
+          //        arduboy.print((char)(65 + i));
           drawMonstSub(i);
         }
         if (abs(hero.hx - mx[i]) <= 1 && abs(hero.hy - my[i]) <= 1) {
@@ -141,6 +157,7 @@ void drawMonst() {
         }
       } else {
         locate(mx[i], my[i]);
+        //        arduboy.print((char)(65 + i));
         drawMonstSub(i);
       }
     }
@@ -190,7 +207,7 @@ void moveMonst() {
             r = 5;
           } else if (ms[i] % 32 == 21 && dungeon[hero.hx][hero.hy] != 8 &&
                      dungeon[mx[i]][my[i]] % 10 == dungeon[hero.hx][hero.hy] % 10 && bitRead(m1[i], 3) == 1) {
-            flashHero('?');
+            flashHero(' ');
             setActiveMessage(18);
             hero.hconf = 10;
             bitWrite(m1[i], 3, 0);
@@ -199,6 +216,9 @@ void moveMonst() {
             setActiveMessage(19);
             byte dmg = random(22-hero.lv);
             charon(dmg,3);
+//            if( hero.hp > dmg ){
+//              hero.hp = hero.hp - dmg; 
+//            }
           } else {
             
             char d=1;
@@ -615,11 +635,6 @@ void tweatHero() {
     hero.hh--;
   }
 
-//  if( hero.hh < 60 || hero.hp <= hero.hpm / 4) {
-//    arduboy.setRGBled(255,0,0);
-//  } else {
-//    arduboy.setRGBled(0,0,0); 
-//  }
 
   if( hero.hh < 60 || hero.hp <= hero.hpm / 4) {
     setActiveMessage(30);
