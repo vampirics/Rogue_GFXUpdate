@@ -104,7 +104,7 @@ void gameover() {
     locate(11, 5);
     font5x7.print((char)pgm_read_byte(mname + death - 4));
   }
-  locate(11 - digits(hero.au), 6);
+  locate(10 - digits(hero.au), 6);
   font5x7.print(F("$"));
   font5x7.print(hero.au);
   if (arduboy.justPressed(A_BUTTON)) {
