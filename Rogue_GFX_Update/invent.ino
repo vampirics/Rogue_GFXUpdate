@@ -110,15 +110,16 @@ byte inventry(byte mode) {
 
 byte action(byte st) {
   byte curs = 0;
-  locate(1, 1);
-  font5x7.print(F(" | use        |"));
-  locate(1, 2);
-  font5x7.print(F(" | throw      |"));
-  locate(1, 3);
-  font5x7.print(F(" | drop       |"));
-  locate(1, 4);
-  font5x7.print(F("               "));
-  locate(3, curs + 1);
+  arduboy.fillRect(17, 3, 57, 35, BLACK);
+  arduboy.fillRect(18, 4, 55, 33, WHITE);
+  arduboy.fillRect(19, 5, 53, 31, BLACK);
+  locate(5, 1);
+  font5x7.print(F(" use"));
+  locate(5, 2);
+  font5x7.print(F(" throw"));
+  locate(5, 3);
+  font5x7.print(F(" drop"));
+  locate(4, curs + 1);
   font5x7.print('>');
 
   arduboy.display();
@@ -128,20 +129,20 @@ byte action(byte st) {
     switch (a) {
       case 2:
         if (curs > 0) {
-          locate(3, curs + 1);
+          locate(4, curs + 1);
           font5x7.print(' ');
           curs--;
-          locate(3, curs + 1);
+          locate(4, curs + 1);
           font5x7.print('>');
           arduboy.display();
         }
         break;
       case 4:
         if (curs < 2) {
-          locate(3, curs + 1);
+          locate(4, curs + 1);
           font5x7.print(' ');
           curs++;
-          locate(3, curs + 1);
+          locate(4, curs + 1);
           font5x7.print('>');
           arduboy.display();
         }
@@ -190,41 +191,54 @@ byte action(byte st) {
   return 1;
 }
 
-void showStatus() {
+void showStatus()
+  {
   byte h = 0;
-  if (hero.hx < 10) {
+  byte menu = 0;
+  if (hero.hx < 10)
+  {
     h = 11;
   }
+  
   if(hero.hblnd==0) drawMap();
   drawHero();
   if(hero.hblnd==0) drawThing();
   if(hero.hblnd==0) drawMonst();
 
-  for (int i = 0; i < 8; i++) {
-    locate(h, i);
-    font5x7.print(F("          "));
-  }
+    if (hero.hx < 10)
+    {
+      arduboy.fillRect(62, -1, 66, 66, BLACK);
+      arduboy.fillRect(63, -1, 64, 66, WHITE);
+      arduboy.fillRect(64, -1, 63, 66, BLACK);
+    }
+    else
+    {
+      arduboy.fillRect(0, -1, 65, 66, BLACK);
+      arduboy.fillRect(0, -1, 64, 66, WHITE);
+      arduboy.fillRect(0, -1, 63, 66, BLACK);
+    }
+    
   locate(h, 0);
-  font5x7.print(F("| Lv;"));
+  font5x7.print(F("Lv;"));
   font5x7.print(hero.dlv);
   locate(h, 1);
-  font5x7.print(F("| Au;"));
+  font5x7.print(F("Au;"));
   font5x7.print(hero.au);
   locate(h, 2);
-  font5x7.print(F("| Hp;"));
+  font5x7.print(F("Hp;"));
   font5x7.print(hero.hp);
   font5x7.print('~');
   font5x7.print(hero.hpm);
   locate(h, 3);
-  font5x7.print(F("| Hg;"));
+  font5x7.print(F("Hg;"));
   font5x7.print(hero.hh);
   locate(h, 4);
-  font5x7.print(F("| St;"));
+  font5x7.print(F("St;"));
   font5x7.print(hero.st);
   font5x7.print('~');
   font5x7.print(hero.stm);
   locate(h, 5);
-  font5x7.print(F("| AC;"));
+  font5x7.print(F("AC;"));
   byte a=equip(4,1);
   byte ac=0;
   if(a==0){
@@ -234,12 +248,12 @@ void showStatus() {
   }
   font5x7.print((int)ac);
   locate(h, 6);
-  font5x7.print(F("| Ex;"));
+  font5x7.print(F("Ex;"));
   font5x7.print(hero.lv);
   font5x7.print('~');
-  locate(h, 7);
-  font5x7.print(F("|"));
-  locate(h + 5, 7);
+  //locate(h, 7);
+  //font5x7.print(F("|"));
+  locate(h + 3, 7);
   font5x7.print(hero.ex);
 }
 
