@@ -58,7 +58,13 @@ void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
   if (rr < prob) {
     dmg = (random(pgm_read_byte(mstat[i] + 1), pgm_read_byte(mstat[i] + 2)) * (100 - ac * 3)) / 100;
     if(dmg<0) dmg=0;
-    flashHero(' ');
+//    if (hero.hp <= dmg) {
+//      death=i+2;
+//      gstate = 2;
+//    } else {
+//      flashHero();
+//      hero.hp = hero.hp - dmg;
+    flashHero('/');
     charon(dmg, i+4); 
       if (bitRead(m1[r], 3) == 1) {
         specialAttack( i ,r );
@@ -104,13 +110,14 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
       break;
     case 12:    //Aquator
       eq = equip(4, 1);
-      if ( equip(4, 1) != 0 && bitRead(inv[eq - 1].i4, 3) == 0) {
-        if (hasRing(9) == 0) {
+      rustArmor( eq );
+//      if ( equip(4, 1) != 0 && bitRead(inv[eq - 1].i4, 3) == 0) {
+//        if (hasRing(9) == 0 && inv[eq - 1].i2 > 0) {
           hit = true; //flashHero();
           setActiveMessage(16);
-          inv[eq - 1].i2--;
-        }
-      }
+//          inv[eq - 1].i2--;
+//        }
+//      }
       break;
     case 13:    //Nymph
       if (random(2) == 0) {

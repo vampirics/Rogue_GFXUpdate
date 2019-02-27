@@ -98,6 +98,14 @@ void makeDungeon4() {
     if (pass[3] == 0) box(r / 2 + 1, 2, r + 1 + (20 - r) / 2, 5, 0);
     box(r / 2 + 1, 2, r + 1 + (20 - r) / 2 - 1, 5, 0);
 
+//28260 bytes
+    for (int i = 0; i <= 3; i++) {
+      if ( hasRoom[i] == 0 && random(5) == 0 ) {
+        box(r / 2+i/2*11-1, 1+i%2*5-1, r / 2+i/2*11+1, 1+i%2*5+1, 8);
+        box(r / 2+i/2*11  , 1+i%2*5  , r / 2+i/2*11  , 1+i%2*5,   0);
+      }
+    }
+
     for (int i = 0; i <= 3; i++) {
       if (hasRoom[i] == 1) {
         makeRoom(i);

@@ -1,4 +1,5 @@
 void title() {
+//  arduboy.setRGBled(0, 0, 0);
   locate(6, 2);
   font5x7.print(F("@ Rogue"));
   locate(5, 5);
@@ -76,7 +77,6 @@ void gameover() {
   adepth = 26;
   EEPROM.update(20,0);
 
-
   locate(2, 1);
   font5x7.print(F("( REST IN PEACE ("));
   locate(5, 3);
@@ -142,7 +142,6 @@ void winner() {
 
 void score() {
 
-
   locate(0, 0);
   font5x7.print(F("- ) Hall Of Fame )  -"));
 
@@ -154,6 +153,8 @@ void score() {
 //      arduboy.setTextBackground(BLACK);
 //      font5x7.setTextColor(WHITE);
     }
+//    locate(0, 2 + i);
+//    font5x7.print(F("                     "));
     locate(1, 2 + i);
     font5x7.print(i + 1);
     locate(3, 2 + i);
@@ -165,6 +166,8 @@ void score() {
       font5x7.print(glory[4 - i].depth);
     }
   }
+//  arduboy.setTextBackground(BLACK);
+//  font5x7.setTextColor(WHITE);
 
   if (arduboy.justPressed(A_BUTTON)) {
     gstate = 0;
@@ -242,6 +245,8 @@ void gameloop() {
         } else {
           gstate = 5;
         }
+//        gstate=5;
+//        buildDungeon();
       } else {
         //      ss = 1;
 //        clearBuf();
@@ -256,6 +261,7 @@ void gameloop() {
   if (arduboy.justPressed(B_BUTTON)) {
     ss = 0;
     setActiveMessage(29);
+//    clearBuf();
     inventry(0);
   }
 
@@ -275,6 +281,8 @@ void buildDungeon() {
   makeDungeon4();
   placeMonst();
   placeThing();
+  //  mess(0);
+  //  addBuf((char)dlv);
 }
 
 void heroMove(byte dir) {
@@ -313,6 +321,7 @@ void heroMove(byte dir) {
     mm = monst[hero.hx + dx][hero.hy + dy];
     r = ms[mm - 1] % 32;
     setActiveMessage(29);
+//    clearBuf();
     hitMonst(mm, r, dx, dy);
   }
   wakeUp();
@@ -353,11 +362,7 @@ void traped(byte vari){
         break;
       case 5:     //rust
         byte eq = equip(4, 1);
-        if ( equip(4, 1) != 0 && bitRead(inv[eq - 1].i4, 3) == 0) {
-          if (hasRing(9) == 0) {
-            inv[eq - 1].i2--;
-          }
-        }
+        rustArmor( eq );
         break;
     }
   }
@@ -377,3 +382,12 @@ void charon(byte dmg, byte reason){
 // 2 :lack of luck
 // 3 :hellfire
 // 4-:killed by X
+
+void rustArmor(byte eq){
+  if ( equip(4, 1) != 0 && bitRead(inv[eq - 1].i4, 3) == 0) {
+    if (hasRing(9) == 0 && pgm_read_byte(astat + inv[eq - 1].ii % 16 ) + inv[eq - 1].i2 > 1) {
+      inv[eq - 1].i2--;
+    }
+  }
+}
+

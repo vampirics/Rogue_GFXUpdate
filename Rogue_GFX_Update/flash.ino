@@ -38,7 +38,6 @@ void initHero(){
   }
   memset(&hero, 0, sizeof(hero));
     
-
   
   hero.im = 5, hero.dlv = 1, hero.st = 16, hero.stm = 16, hero.lv = 1;
 

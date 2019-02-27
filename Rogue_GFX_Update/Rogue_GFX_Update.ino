@@ -128,12 +128,7 @@ byte hasRoom[RMAX * 2] = {};
 byte isDark[RMAX * 2] = {};
 byte isBigRoom=0;
 byte mx[MMAX] = {}, my[MMAX] = {}, ms[MMAX] = {}, mh[MMAX] = {}, m1[MMAX] = {}, m2[MMAX] = {};
-//byte id[TMAX] = {}, t1[TMAX] = {}, t4[TMAX] = {};
-//byte ii[IMAX] = {}, i1[IMAX] = {}, i4[IMAX] = {};
-//byte fi = 0, f1 = 0, f4 = 0;
-//char t2[TMAX] = {}, t3[TMAX] = {};
-//char i2[IMAX] = {}, i3[IMAX] = {};
-//char f2 = 0, f3 = 0;
+
 byte ttab[4][POMAX] = {
   {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
   {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
