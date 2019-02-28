@@ -8,7 +8,9 @@ void flashHero(char sym){
   font5x7.print(sym);
   arduboy.display();
   arduboy.digitalWriteRGB(RED_LED, RGB_ON);
+  arduboy.invert(true);
   delay(100);
+  arduboy.invert(false);
   arduboy.digitalWriteRGB(RED_LED, RGB_OFF);
 }
 

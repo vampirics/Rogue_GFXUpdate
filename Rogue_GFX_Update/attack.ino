@@ -64,7 +64,7 @@ void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
 //    } else {
 //      flashHero();
 //      hero.hp = hero.hp - dmg;
-    flashHero('/');
+    flashHero(' ');
     charon(dmg, i+4); 
       if (bitRead(m1[r], 3) == 1) {
         specialAttack( i ,r );
