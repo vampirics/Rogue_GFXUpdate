@@ -267,7 +267,7 @@ const char message5[] PROGMEM = "dir}";
 const char message6[] PROGMEM = "level up";
 const char message7[] PROGMEM = "oops'''";
 const char message8[] PROGMEM = "yummy";
-const char message9[] PROGMEM = "it cursed";
+const char message9[] PROGMEM = "it is cursed";
 const char message10[] PROGMEM = "removed";
 const char message11[] PROGMEM = "Equipped";
 const char message12[] PROGMEM = "already wield";
@@ -291,7 +291,7 @@ const char message28[] PROGMEM = "rust trap";
 
 const char message29[] PROGMEM = "";
 
-const char message30[] PROGMEM = "danger`";
+const char message30[] PROGMEM = "Danger`";
 
 const char * const messages[31] PROGMEM =
 {

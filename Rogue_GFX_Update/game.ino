@@ -73,6 +73,7 @@ void landing(){
 }
 
 void gameover() {
+  
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
@@ -270,10 +271,10 @@ void gameloop() {
   drawHero();
   if (hero.hblnd == 0) drawThing();
   if (hero.hblnd == 0) drawMonst();
+    showMsg();
   if (ss == 1) {
     showStatus();
   }
-  showMsg();
 }
 
 void buildDungeon() {
@@ -354,7 +355,7 @@ void traped(byte vari){
       case 2:     //sleep
         if(hero.hslep==0) hero.hslep=5;
         break;
-      case 3:     //telport
+      case 3:     //teleport
         teleportHero();
         break;
       case 4:     //poison

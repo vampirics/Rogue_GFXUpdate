@@ -9,7 +9,7 @@ void flashHero(char sym){
   arduboy.display();
   arduboy.digitalWriteRGB(RED_LED, RGB_ON);
   arduboy.invert(true);
-  delay(100);
+  delay(70);
   arduboy.invert(false);
   arduboy.digitalWriteRGB(RED_LED, RGB_OFF);
 }
@@ -29,7 +29,7 @@ void flashMonst(byte num, char sym){
   }
   arduboy.display();
   arduboy.digitalWriteRGB(BLUE_LED, RGB_ON);
-  delay(100);
+  delay(70);
   arduboy.digitalWriteRGB(BLUE_LED, RGB_OFF);
 }
 

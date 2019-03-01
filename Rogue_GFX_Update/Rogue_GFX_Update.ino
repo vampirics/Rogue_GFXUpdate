@@ -111,6 +111,7 @@ const char astat[ARMAX] PROGMEM = {
   2, 3, 4, 5, 6, 6, 7
 };
 
+
 byte dungeon[21][8];
 byte known[3][8];
 byte monst[21][8];
